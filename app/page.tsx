@@ -50,7 +50,7 @@ function Month({ style, month }: { style: string; month: string }) {
 export default async function Home() {
   return (
     <div className="h-screen">
-      <h1 className="text-3xl font-bold">
+      <h1 className="text-3xl font-bold text-center">
         2023 52 Weeks Photography Challenge
       </h1>
 
