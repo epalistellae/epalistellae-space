@@ -1,20 +1,31 @@
 import supabase from "../utils/supabase";
 import Image from "next/image";
 
-function Month({ style, month }: { style: string; month: string }) {
+async function MonthPreview({ month, blur }: { month: string; blur: boolean }) {
+  const blurClass = blur ? "blur-xl" : "";
+  const { data } = await supabase.from("fiftytwoweeks").select();
+
   return (
-    <div className={style + " p-0.5"}>
-      <h1 className="font-bold text-lg font-serif text-white text-center">
+    <div className="w-full px-4 pb-4 md:w-1/2 lg:w-1/4">
+      <h2 className="title-font text-lg font-medium text-gray-900 text-center">
         {month}
-      </h1>
-      <div style={{ height: "calc(100% - 28px)" }}>
+      </h2>
+      <a className={`relative block h-48 overflow-hidden rounded ${blurClass}`}>
         <div className="grid grid-cols-2 grid-rows-2 h-full">
           <div className="relative">
             <Image
-              src="/pangolin.jpg"
+              src={data[0].imgSrc}
               alt="Placeholder"
               fill={true}
-              style={{ borderTopLeftRadius: "0.5rem" }}
+              className="object-cover"
+            />
+          </div>
+          <div className="relative">
+            <Image
+              src="/flower.jpg"
+              alt="Placeholder"
+              fill={true}
+              className="object-cover"
             />
           </div>
           <div className="relative">
@@ -22,7 +33,7 @@ function Month({ style, month }: { style: string; month: string }) {
               src="/fox.jpg"
               alt="Placeholder"
               fill={true}
-              style={{ borderTopRightRadius: "0.5rem" }}
+              className="object-cover"
             />
           </div>
           <div className="relative">
@@ -30,46 +41,34 @@ function Month({ style, month }: { style: string; month: string }) {
               src="/owl.jpg"
               alt="Placeholder"
               fill={true}
-              style={{ borderBottomLeftRadius: "0.5rem" }}
-            />
-          </div>
-          <div className="relative">
-            <Image
-              src="/camel.png"
-              alt="Placeholder"
-              fill={true}
-              style={{ borderBottomRightRadius: "0.5rem" }}
+              className="object-cover"
             />
           </div>
         </div>
-      </div>
+      </a>
     </div>
   );
 }
 
 export default async function Home() {
   return (
-    <div className="h-screen">
-      <h1 className="text-3xl font-bold text-center">
-        2023 52 Weeks Photography Challenge
-      </h1>
-
-      <div className="flex items-center justify-center">
-        <div className="grid grid-rows-3 grid-cols-4 gap-y-10 justify-items-center w-1/2 place-items-center">
-          <Month style="h-52 w-52 bg-purple-700" month="January" />
-          <Month style="h-52 w-52 bg-blue-700" month="February" />
-          <Month style="h-52 w-52 bg-green-700" month="March" />
-          <Month style="h-52 w-52 bg-red-700" month="April" />
-          <Month style="h-52 w-52 bg-purple-700" month="May" />
-          <Month style="h-52 w-52 bg-blue-700" month="June" />
-          <Month style="h-52 w-52 bg-green-700" month="July" />
-          <Month style="h-52 w-52 bg-red-700" month="August" />
-          <Month style="h-52 w-52 bg-purple-700" month="September" />
-          <Month style="h-52 w-52 bg-blue-700" month="October" />
-          <Month style="h-52 w-52 bg-green-700" month="November" />
-          <Month style="h-52 w-52 bg-red-700" month="December" />
+    <section className="min-h-screen">
+      <div className="container mx-auto px-5 py-10">
+        <div className="-m-4 flex flex-wrap">
+          <MonthPreview month="January" blur={false} />
+          <MonthPreview month="February" blur={true} />
+          <MonthPreview month="March" blur={true} />
+          <MonthPreview month="April" blur={true} />
+          <MonthPreview month="May" blur={true} />
+          <MonthPreview month="June" blur={true} />
+          <MonthPreview month="July" blur={true} />
+          <MonthPreview month="August" blur={true} />
+          <MonthPreview month="September" blur={true} />
+          <MonthPreview month="October" blur={true} />
+          <MonthPreview month="November" blur={true} />
+          <MonthPreview month="December" blur={true} />
         </div>
       </div>
-    </div>
+    </section>
   );
 }
